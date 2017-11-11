@@ -1,39 +1,61 @@
-package edu.towson.cis.cosc455jkamau.project1
+ package edu.towson.cis.cosc455jkamau.project1
 
 import scala.io.Source;
 
-object Compiler {
-var populsteFilerray:Array[Char]=Array();
-  var currentToken : String = ""
-  var fileContents : String = ""
+ object Compiler {
+   //inisalise classes and vars
+   val lex = new MyLexicalAnalyzer
+   val sin = new MySyntazAnalyzer
+   val sam = new MySemanticAnalyzer
 
-  val Scanner = new MyLexicalAnalyzer
-  val Parser = new MySyntazAnalyzer
-  val SemanticAnalyzer = new MySyntazAnalyzer
+   var currentToken: String = ""
+   var fileContents: String = ""
+   var endCase: Boolean = false
+   var filename: String = ""
 
-  def main(args: Array[String]): Unit = {
-    checkFile(args)
-    readFile(args(0))
 
-    Scanner.getNextToken()
-}
-  def readFile(file : String) = {
-    val source = scala.io.Source.fromFile(file)
-    for(line <- Source.fromFile(file).getLines()){
-      println("This " + line)
-    }
+   def main(args: Array[String]) = {
+     //initializing file name
+     filename = args(0)
 
-    fileContents = try source.mkString finally source.close()
-  }
 
-def checkFile(args : Array[String]) = {
-  if (args.length != 1) {
-  println("USAGE ERROR: wrong number of args fool!")
-  System.exit(1)
-}
-  else if (! args(0).endsWith(".gtx")) {
-  println("USAGE ERROR: wrong extension fool!")
-  System.exit(1)
-}
-}
-}
+     checkFile(args)
+     readFile(args(0))
+
+     //package contents into a string
+     lex.start(fileContents)
+
+     //loops till file empty
+     while (lex.filePosition < lex.filesize && !endCase) {
+       //gets current token
+       lex.getNextToken()
+
+       //checks current token for syntax
+       sin.gittex()
+       if (currentToken.equalsIgnoreCase(CONSTANTS.DOCE)) {
+         endCase = true
+       }
+     }
+
+     //calling semantic analyzer
+     sam.semantics()
+   }
+  // Let's create a string
+
+   def readFile(file: String) = {
+     val source = scala.io.Source.fromFile(file)
+     fileContents = try source.mkString finally source.close()
+   }
+
+   //Checking the file type boss
+   def checkFile(args: Array[String]) = {
+     if (args.length != 1) {
+       println("USAGE ERROR: Wrong number of args")
+       System.exit(1)
+     }
+     else if (!args(0).endsWith(".gtx")) {
+       println("USAGE ERROR: Wrong extension Fool")
+       System.exit(1)
+     }
+   }
+ }
