@@ -110,7 +110,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
     else if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.DOCE)) {
       found = true
     }
-    else if (Compiler.lex.isText(Compiler.currentToken)) {
+    else if (Compiler.joe.isText(Compiler.currentToken)) {
       text()
       innerItem()
     }
@@ -157,7 +157,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   override def bold(): Unit = {
     bold()
     posText()
-    bold() //@@@
+    bold()
   }
 
   override def italics(): Unit = {
@@ -168,7 +168,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
 
   override def listItem(): Unit = {
     listItemb()
-    innerItem() //@@@
+    innerItem()
   }
 
   override def link(): Unit = {
@@ -191,9 +191,9 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
 
   //general syntax defs for methods
   def text(): Unit = {
-    if (Compiler.lex.isText(Compiler.currentToken)) {
+    if (Compiler.joe.isText(Compiler.currentToken)) {
       parse.push(Compiler.currentToken)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: Text was expected")
@@ -203,16 +203,16 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   }
 
   def posText(): Unit = {
-    if (Compiler.lex.isText(Compiler.currentToken)) {
+    if (Compiler.joe.isText(Compiler.currentToken)) {
       parse.push(Compiler.currentToken)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
   }
 
   override def newline(): Unit =
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.NEWLINE)) {
       parse.push(CONSTANTS.NEWLINE)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: \\\\ was expected")
@@ -223,7 +223,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def rightBrace(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase("]")) {
       parse.push("]")
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: ] was expected to end the token")
@@ -235,7 +235,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def leftBrace(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase("[")) {
       parse.push("[")
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: [ was expected")
@@ -247,7 +247,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def leftParan(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.ADDRESSB)) {
       parse.push("(")
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: ( was expected")
@@ -259,7 +259,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def rightParan(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(")")) {
       parse.push(")")
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: ) was expected to end the token")
@@ -271,7 +271,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def equl(): Unit = {
     if (Compiler.currentToken.equals(CONSTANTS.EQSIGN)) {
       parse.push("=")
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: = was expected")
@@ -284,7 +284,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def docb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.DOCB)) {
       parse.push(CONSTANTS.DOCB)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: \\BEGIN was expected")
@@ -296,8 +296,8 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def doce(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.DOCE)) {
       parse.push(CONSTANTS.DOCE)
-      Compiler.lex.getNextToken()
-      if (Compiler.lex.nextChar.equals('\n'))
+      Compiler.joe.getNextToken()
+      if (Compiler.joe.nextChar.equals('\n'))
         return
       else {
         println("SYNTAX ERROR: items after document end statement")
@@ -314,7 +314,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def titleb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.TITLEB)) {
       parse.push(CONSTANTS.TITLEB)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: \\TITLE[ was expected")
@@ -326,7 +326,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def headb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.HEADING)) {
       parse.push(CONSTANTS.HEADING)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: # was expected")
@@ -338,7 +338,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def parb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.PARAB)) {
       parse.push(CONSTANTS.PARAB)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: \\PARAB was expected")
@@ -350,7 +350,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def pare(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.PARAE)) {
       parse.push(CONSTANTS.PARAE)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: \\PARAE was expected")
@@ -362,7 +362,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def boldb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.BOLD)) {
       parse.push(CONSTANTS.BOLD)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: ** was expected")
@@ -374,7 +374,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def italb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.ITALICS)) {
       parse.push(CONSTANTS.ITALICS)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: * was expected")
@@ -386,7 +386,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def listItemb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.LISTITEM)) {
       parse.push(CONSTANTS.LISTITEM)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: + was expected")
@@ -398,7 +398,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def imageb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.IMAGEB)) {
       parse.push(CONSTANTS.IMAGEB)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: ![ was expected")
@@ -410,7 +410,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def useb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.USEB)) {
       parse.push(CONSTANTS.USEB)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: \\USE[ was expected")
@@ -422,7 +422,7 @@ class MySyntazAnalyzer extends SyntaxAnalyzer {
   def defb(): Unit = {
     if (Compiler.currentToken.equalsIgnoreCase(CONSTANTS.DEFB)) {
       parse.push(CONSTANTS.DEFB)
-      Compiler.lex.getNextToken()
+      Compiler.joe.getNextToken()
     }
     else {
       println("Syntax Error: \\DEF[ was expected")

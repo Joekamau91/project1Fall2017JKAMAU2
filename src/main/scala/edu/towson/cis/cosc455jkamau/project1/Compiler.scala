@@ -1,12 +1,12 @@
  package edu.towson.cis.cosc455jkamau.project1
-
+//JosephKamau
 import scala.io.Source;
 
  object Compiler {
-   //inisalise classes and vars
-   val lex = new MyLexicalAnalyzer
-   val sin = new MySyntazAnalyzer
-   val sam = new MySemanticAnalyzer
+   //start by initializing vars
+   val joe = new MyLexicalAnalyzer
+   val kam = new MySyntazAnalyzer
+   val josh = new MySemanticAnalyzer
 
    var currentToken: String = ""
    var fileContents: String = ""
@@ -23,22 +23,22 @@ import scala.io.Source;
      readFile(args(0))
 
      //package contents into a string
-     lex.start(fileContents)
+     joe.start(fileContents)
 
      //loops till file empty
-     while (lex.filePosition < lex.filesize && !endCase) {
+     while (joe.filePosition < joe.filesize && !endCase) {
        //gets current token
-       lex.getNextToken()
+       joe.getNextToken()
 
        //checks current token for syntax
-       sin.gittex()
+       kam.gittex()
        if (currentToken.equalsIgnoreCase(CONSTANTS.DOCE)) {
          endCase = true
        }
      }
 
      //calling semantic analyzer
-     sam.semantics()
+     josh.semantics()
    }
   // Let's create a string
 

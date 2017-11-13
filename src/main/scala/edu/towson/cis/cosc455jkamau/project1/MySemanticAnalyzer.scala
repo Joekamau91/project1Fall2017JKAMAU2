@@ -22,15 +22,15 @@ class MySemanticAnalyzer {
 
   def semantics(): Unit = {
 
-    parse = Compiler.sin.parse.reverse
+    parse = Compiler.kam.parse.reverse
     nextToken = parse.pop()
 
     //Starting the file reading
-    lex()
+    joe()
   }
 
   //File translation
-  def lex() {
+  def joe() {
 
     while (!parse.isEmpty) {
       if (nextToken.equalsIgnoreCase(CONSTANTS.DOCB)) {
@@ -97,7 +97,7 @@ class MySemanticAnalyzer {
         }
         else {
           if (!nextToken.equalsIgnoreCase(CONSTANTS.DOCE))
-            lex()
+            joe()
         }
         outputStack.push("</li>")
         if (!parse.isEmpty)
